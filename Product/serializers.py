@@ -9,6 +9,11 @@ from django.db.models import F, Max, Min
 
 class PropertiesSerializer(serializers.ModelSerializer):
     accessory  = serializers.SerializerMethodField(read_only=True)
+    final_price = serializers.SerializerMethodField(read_only=True)
+    
+    def get_final_price(self,obj):
+        return ((obj.length * obj.width) * obj.base_price) + obj.send_salary + obj.frame_price
+
     class Meta:
         model = Properties
         fields = '__all__'
